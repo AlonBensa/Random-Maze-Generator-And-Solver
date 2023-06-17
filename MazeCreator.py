@@ -9,9 +9,9 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 PURPLE = (128, 0, 128)
 
-LENGTH_X = LENGTH_Y = 40
-MAZE_WIDTH = 960
-MAZE_HEIGHT = 960
+LENGTH_X = LENGTH_Y = 30
+MAZE_WIDTH = 900
+MAZE_HEIGHT = 900
 
 class Directions(Enum):
     UP = 1
@@ -202,13 +202,17 @@ def drawSolution(solution):
     """
 
     prev_x, prev_y = (0, 0)
-    count = 0
+    countColor = 0
     for val in solution:
         val_x, val_y = val
-        pygame.draw.rect(SCREEN, PURPLE, pygame.Rect(val_x * 2 * BLOCK_SIZE_X + BLOCK_SIZE_X, val_y * 2 * BLOCK_SIZE_Y + BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y))
-        pygame.draw.rect(SCREEN, PURPLE, pygame.Rect(((val_x + prev_x) / 2) * 2 * BLOCK_SIZE_X + BLOCK_SIZE_X, ((val_y + prev_y) / 2) * 2 * BLOCK_SIZE_Y + BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y))
-        count += 1
-        prev_x, prev_y = val
+        if countColor < 255:
+            pygame.draw.rect(SCREEN, (0+countColor, 0, 255-countColor), pygame.Rect(val_x * 2 * BLOCK_SIZE_X + BLOCK_SIZE_X, val_y * 2 * BLOCK_SIZE_Y + BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y))
+            pygame.draw.rect(SCREEN, (0+countColor, 0, 255-countColor), pygame.Rect(((val_x + prev_x) / 2) * 2 * BLOCK_SIZE_X + BLOCK_SIZE_X, ((val_y + prev_y) / 2) * 2 * BLOCK_SIZE_Y + BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y))
+        else:
+            pygame.draw.rect(SCREEN, (255, 0, 0), pygame.Rect(val_x * 2 * BLOCK_SIZE_X + BLOCK_SIZE_X, val_y * 2 * BLOCK_SIZE_Y + BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y))
+            pygame.draw.rect(SCREEN, (255, 0, 0), pygame.Rect(((val_x + prev_x) / 2) * 2 * BLOCK_SIZE_X + BLOCK_SIZE_X, ((val_y + prev_y) / 2) * 2 * BLOCK_SIZE_Y + BLOCK_SIZE_Y, BLOCK_SIZE_X, BLOCK_SIZE_Y))
+        countColor += 1
+        prev_x, prev_y = val 
 
 if "__main__" == __name__:
     global BLOCK_SIZE_X, BLOCK_SIZE_Y
